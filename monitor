@@ -1,0 +1,31 @@
+#!/bin/bash
+
+source application
+
+if [ $# != 0 ]; then
+    echo "Usage: $0 "
+    echo "  no options"
+    echo
+    echo "  Edit 'application' file in the current directory"
+    echo "  and update the required connection parameters."
+    exit
+fi
+
+TOPIC="$APPLICATION/devices/$DEVICE/up"
+
+if [ $DEBUG ]; then
+    echo "HANDLER:      " $HANDLER
+    echo "APPLICATION:  " $APPLICATION
+    echo "KEY:          " $KEY
+    echo "DEVICE:       " $DEVICE
+    echo
+    echo "MQTT Topic:   " $TOPIC
+    MDEBUG=-d
+fi
+
+mosquitto_sub \
+    -h $HANDLER \
+    -u $APPLICATION \
+    -P $KEY \
+    -t $TOPIC | jq
+

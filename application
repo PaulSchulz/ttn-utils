@@ -1,0 +1,5 @@
+HANDLER=au.<Region>.thethings.network
+APPLICATION=<YourApplicationName>
+KEY=<ttn-account-v2.-key>
+DEVICE=<YourDeviceID>
+# DEBUG=y

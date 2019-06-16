@@ -1,0 +1,41 @@
+#!/bin/bash
+
+source application
+
+if [ $# == 0 ]; then
+    echo "Usage: $0 \"<message>\""
+    echo "  message - hexdump encoded hexidecimal data to be"
+    echo "            to be sent to nominated TTN device."
+    echo "            eg. 01 02 03 04"
+    echo ""
+    echo "  Edit 'application' file in the current directory"
+    echo "  and update the required connection parameters."
+    exit
+fi
+
+DATA="00: $1"
+PAYLOAD=`echo "$DATA" | xxd -r | base64`
+MESSAGE="{\"port\":1,\"payload_raw\":\"$PAYLOAD\"}"
+TOPIC="$APPLICATION/devices/$DEVICE/down"
+
+if [ $DEBUG ]; then
+    echo "HANDLER:      " $HANDLER
+    echo "APPLICATION:  " $APPLICATION
+    echo "KEY:          " $KEY
+    echo "DEVICE:       " $DEVICE
+    echo
+    echo "DATA:         " $1
+    echo "XXD DATA:     " $DATA
+    echo "PAYLOAD:      " $PAYLOAD
+    echo "MQTT Message: " $MESSAGE
+    echo "MQTT Topic:   " $TOPIC
+    echo
+    MDEBUG=-d
+fi
+
+mosquitto_pub $MDEBUG \
+    -h $HANDLER \
+    -u $APPLICATION \
+    -P $KEY \
+    -t $TOPIC \
+    -m "{\"port\":1,\"payload_raw\":\"$PAYLOAD\"}"
