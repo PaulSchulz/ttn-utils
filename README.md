@@ -17,7 +17,7 @@ application keys.)
 monitor     - Display the MQTT messages for configured device.
 monitor-all - Display the MQTT messages for all application devices.
 downlink    - Schedule downlink data to configured device.
-'''
+```
 
 ### Configuration File (application)
 ```
@@ -26,4 +26,4 @@ APPLICATION=<YourApplicationName>
 KEY=<ttn-account-v2.-key>
 DEVICE=<YourDeviceID>
 # DEBUG=y
-'''
+```
